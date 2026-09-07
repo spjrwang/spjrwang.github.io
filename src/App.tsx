@@ -113,25 +113,25 @@ export default function App() {
           <div className="section__inner">
             <h2 className="section__title">{t.researchTitle}</h2>
             <p className="section__lead">{t.researchIntro}</p>
-            <div className="research-layout">
-              <ul className="interest-list">
-                {t.interests.map((item) => (
-                  <li key={item.title} className="interest">
+            <ul className="interest-list">
+              {t.interests.map((item) => (
+                <li key={item.title} className="interest">
+                  <div className="interest__copy">
                     <h3 className="interest__title">{item.title}</h3>
                     <p className="interest__body">{item.body}</p>
-                  </li>
-                ))}
-              </ul>
-              <figure className="research-figure">
-                <img
-                  src="/figures/research-schematic.jpg"
-                  alt="Research interests schematic: multimodal EHR and genomics integration, foundation model alignment, and model-device integration"
-                  width={720}
-                  height={960}
-                  loading="lazy"
-                />
-              </figure>
-            </div>
+                  </div>
+                  <figure className="interest__figure">
+                    <img
+                      src={item.figure}
+                      alt=""
+                      width={640}
+                      height={360}
+                      loading="lazy"
+                    />
+                  </figure>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

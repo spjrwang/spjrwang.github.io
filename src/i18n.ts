@@ -86,15 +86,18 @@ export const copy = {
     interests: [
       {
         title: 'Multimodal integration',
-        body: 'Integrating heterogeneous biomedical modalities—especially electronic health records (EHR) and genomics—into coherent representations for discovery and clinical use.',
+        body: 'Integrating heterogeneous biomedical modalities—especially electronic health records (EHR) and genome variants—into coherent representations for discovery and clinical use.',
+        figure: '/figures/research-1.jpg',
       },
       {
         title: 'Foundation model alignment',
         body: 'Aligning foundation models and adapting them to continuous biomedical data streams and longitudinal signals.',
+        figure: '/figures/research-2.jpg',
       },
       {
         title: 'Model–device integration',
         body: 'Embedding models with instruments and devices so learning systems can operate closer to real-world measurement and care workflows.',
+        figure: '/figures/research-3.jpg',
       },
     ],
     publicationsTitle: 'Publications',
@@ -143,15 +146,18 @@ export const copy = {
     interests: [
       {
         title: '多模态整合',
-        body: '整合异构生物医学模态，尤其关注电子健康档案（EHR）与基因组学数据的联合建模。',
+        body: '整合异构生物医学模态，尤其关注电子健康档案（EHR）与基因组变异（genome variants）的联合建模。',
+        figure: '/figures/research-1.jpg',
       },
       {
         title: '基础模型对齐',
         body: '对 Foundational Model 进行对齐，并应用于连续型生物医学数据与时序信号。',
+        figure: '/figures/research-2.jpg',
       },
       {
         title: '模型与设备整合',
         body: '将模型嵌入仪器与 device，使学习系统更贴近真实测量与临床工作流。',
+        figure: '/figures/research-3.jpg',
       },
     ],
     publicationsTitle: '发表论文',
