@@ -76,7 +76,7 @@ function DualH({
 
 function Frame({
   id,
-  height = 120,
+  height = 128,
   children,
 }: {
   id: string
@@ -108,56 +108,114 @@ function Frame({
   )
 }
 
+/** Clinical record / EHR */
 function EhrIcon({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <rect width="54" height="64" rx="8" fill={blueSoft} stroke={blue} strokeWidth="1.5" />
-      <rect x="10" y="12" width="34" height="5" rx="2" fill={blue} opacity="0.35" />
-      <rect x="10" y="23" width="28" height="5" rx="2" fill={blue} opacity="0.28" />
-      <rect x="10" y="34" width="32" height="5" rx="2" fill={blue} opacity="0.28" />
-      <rect x="10" y="45" width="20" height="5" rx="2" fill={teal} opacity="0.55" />
-      <circle cx="40" cy="48" r="7" fill={teal} />
-      <path d="M37 48h6M40 45v6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+      <rect width="56" height="66" rx="8" fill={blueSoft} stroke={blue} strokeWidth="1.5" />
+      <rect x="11" y="12" width="34" height="5" rx="2" fill={blue} opacity="0.35" />
+      <rect x="11" y="23" width="28" height="5" rx="2" fill={blue} opacity="0.28" />
+      <rect x="11" y="34" width="32" height="5" rx="2" fill={blue} opacity="0.28" />
+      <rect x="11" y="45" width="22" height="5" rx="2" fill={teal} opacity="0.5" />
+      <circle cx="42" cy="50" r="8" fill={teal} />
+      <path d="M39 50h6M42 47v6" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
     </g>
   )
 }
 
-function GenomeIcon({ x, y }: { x: number; y: number }) {
+/** Sequence with a highlighted variant base — clearer than abstract helix ticks */
+function GenomeVariantsIcon({ x, y }: { x: number; y: number }) {
+  const bases = [
+    { t: 'A', c: blue },
+    { t: 'T', c: teal },
+    { t: 'G', c: amber },
+    { t: 'C', c: blue },
+  ]
   return (
     <g transform={`translate(${x} ${y})`}>
-      <rect width="72" height="64" rx="8" fill={tealSoft} stroke={teal} strokeWidth="1.5" />
-      <path
-        d="M22 12c6 8 6 16 0 24s-6 16 0 24"
-        fill="none"
-        stroke={teal}
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M34 12c6 8 6 16 0 24s-6 16 0 24"
-        fill="none"
-        stroke={blue}
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        opacity="0.75"
-      />
-      <line x1="22" y1="20" x2="34" y2="24" stroke={amber} strokeWidth="1.6" />
-      <line x1="22" y1="32" x2="34" y2="28" stroke={amber} strokeWidth="1.6" />
-      <line x1="22" y1="44" x2="34" y2="48" stroke={amber} strokeWidth="1.6" />
-      <circle cx="54" cy="22" r="3" fill={amber} />
-      <circle cx="58" cy="36" r="3" fill={blue} />
-      <circle cx="52" cy="50" r="3" fill={teal} />
+      <rect width="92" height="66" rx="8" fill={tealSoft} stroke={teal} strokeWidth="1.5" />
+      <text
+        x="46"
+        y="18"
+        textAnchor="middle"
+        fill={ink}
+        fontSize="9"
+        fontFamily="IBM Plex Sans, sans-serif"
+        fontWeight="600"
+      >
+        DNA sequence
+      </text>
+      {bases.map((b, i) => (
+        <g key={i} transform={`translate(${10 + i * 18} 26)`}>
+          <rect width="15" height="18" rx="3" fill="#fff" stroke={b.c} strokeWidth="1.2" />
+          <text
+            x="7.5"
+            y="13"
+            textAnchor="middle"
+            fill={b.c}
+            fontSize="10"
+            fontFamily="IBM Plex Sans, sans-serif"
+            fontWeight="700"
+          >
+            {b.t}
+          </text>
+        </g>
+      ))}
+      {/* mutated position */}
+      <g transform="translate(28 48)">
+        <rect width="15" height="14" rx="3" fill="#fff3cd" stroke={amber} strokeWidth="1.4" />
+        <text
+          x="7.5"
+          y="11"
+          textAnchor="middle"
+          fill={amber}
+          fontSize="9"
+          fontFamily="IBM Plex Sans, sans-serif"
+          fontWeight="700"
+        >
+          A
+        </text>
+      </g>
+      <text
+        x="54"
+        y="59"
+        fill={amber}
+        fontSize="9"
+        fontFamily="IBM Plex Sans, sans-serif"
+        fontWeight="600"
+      >
+        variant
+      </text>
     </g>
   )
 }
 
+/** Two inputs merge into one representation — concrete fusion */
 function FusionIcon({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <circle cx="32" cy="32" r="30" fill="#eef6f4" stroke={teal} strokeWidth="1.6" />
-      <circle cx="22" cy="28" r="14" fill={blueSoft} stroke={blue} strokeWidth="1.3" opacity="0.9" />
-      <circle cx="42" cy="36" r="14" fill={tealSoft} stroke={teal} strokeWidth="1.3" opacity="0.9" />
-      <circle cx="32" cy="32" r="7" fill={amber} />
+      <rect width="78" height="66" rx="10" fill="#eef6f4" stroke={teal} strokeWidth="1.5" />
+      <rect x="10" y="12" width="22" height="16" rx="3" fill={blueSoft} stroke={blue} strokeWidth="1.1" />
+      <rect x="46" y="12" width="22" height="16" rx="3" fill={tealSoft} stroke={teal} strokeWidth="1.1" />
+      <path
+        d="M21 28v8c0 6 8 10 18 10s18-4 18-10v-8"
+        fill="none"
+        stroke={teal}
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      <rect x="22" y="44" width="34" height="14" rx="4" fill={amber} opacity="0.9" />
+      <text
+        x="39"
+        y="54"
+        textAnchor="middle"
+        fill="#fff"
+        fontSize="8"
+        fontFamily="IBM Plex Sans, sans-serif"
+        fontWeight="700"
+      >
+        merged
+      </text>
     </g>
   )
 }
@@ -181,33 +239,39 @@ function ModelIcon({ x, y }: { x: number; y: number }) {
       <line x1="36" y1="26" x2="60" y2="36" stroke={teal} strokeWidth="1.2" opacity="0.55" />
       <line x1="36" y1="46" x2="60" y2="36" stroke={teal} strokeWidth="1.2" opacity="0.55" />
       {nodes.map(([nx, ny], i) => (
-        <circle
-          key={i}
-          cx={nx}
-          cy={ny}
-          r="4.5"
-          fill={i === 5 ? teal : blue}
-        />
+        <circle key={i} cx={nx} cy={ny} r="4.5" fill={i === 5 ? teal : blue} />
       ))}
     </g>
   )
 }
 
-function DeviceIcon({ x, y }: { x: number; y: number }) {
+/** Smartwatch + wearable cue */
+function WearableIcon({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <rect width="72" height="72" rx="10" fill={amberSoft} stroke={amber} strokeWidth="1.5" />
-      <rect x="16" y="14" width="40" height="28" rx="4" fill="#fff" stroke={ink} strokeWidth="1.3" />
+      <rect width="78" height="72" rx="10" fill={amberSoft} stroke={amber} strokeWidth="1.5" />
+      {/* watch band */}
+      <rect x="30" y="6" width="18" height="12" rx="3" fill={ink} opacity="0.35" />
+      <rect x="30" y="54" width="18" height="12" rx="3" fill={ink} opacity="0.35" />
+      {/* watch body */}
+      <rect x="22" y="16" width="34" height="40" rx="8" fill="#fff" stroke={ink} strokeWidth="1.4" />
+      <circle cx="39" cy="36" r="11" fill={blueSoft} stroke={blue} strokeWidth="1.2" />
       <path
-        d="M22 28h6l3-6 4 12 3-6h8"
+        d="M39 29v7l5 3"
         fill="none"
         stroke={teal}
         strokeWidth="1.8"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
-      <rect x="26" y="48" width="20" height="12" rx="3" fill={ink} opacity="0.75" />
-      <circle cx="36" cy="54" r="2.2" fill="#fff" />
+      {/* small pulse on face */}
+      <path
+        d="M28 48h4l2-3 2 5 2-2h4"
+        fill="none"
+        stroke={teal}
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
     </g>
   )
 }
@@ -229,10 +293,10 @@ function OmicsBand({
 }) {
   return (
     <g>
-      <rect x={x} y={y} width={w} height="22" rx="6" fill={soft} stroke={color} strokeWidth="1.3" />
+      <rect x={x} y={y} width={w} height="20" rx="6" fill={soft} stroke={color} strokeWidth="1.3" />
       <text
         x={x + w / 2}
-        y={y + 15}
+        y={y + 14}
         textAnchor="middle"
         fill={ink}
         fontSize="10"
@@ -245,16 +309,35 @@ function OmicsBand({
   )
 }
 
-function DiseaseIcon({ x, y }: { x: number; y: number }) {
+/** Clinical phenotype / patient outcome — clearer than abstract disease blob */
+function PhenotypeIcon({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x} ${y})`}>
-      <rect width="78" height="78" rx="12" fill="#f7e8e8" stroke="#b42318" strokeWidth="1.5" />
-      <circle cx="39" cy="34" r="16" fill="#fff" stroke="#b42318" strokeWidth="1.4" />
+      <rect width="88" height="78" rx="12" fill="#f7e8e8" stroke="#b42318" strokeWidth="1.5" />
+      {/* person */}
+      <circle cx="28" cy="28" r="9" fill="#fff" stroke="#b42318" strokeWidth="1.3" />
       <path
-        d="M39 24c-4 6-8 10-8 14a8 8 0 0016 0c0-4-4-8-8-14z"
-        fill="#d92d20"
+        d="M14 58c2-12 8-18 14-18s12 6 14 18"
+        fill="#fff"
+        stroke="#b42318"
+        strokeWidth="1.3"
       />
-      <rect x="18" y="56" width="42" height="8" rx="3" fill="#b42318" opacity="0.25" />
+      {/* clinic chart */}
+      <rect x="50" y="18" width="28" height="36" rx="4" fill="#fff" stroke="#b42318" strokeWidth="1.2" />
+      <rect x="55" y="40" width="5" height="10" rx="1" fill="#d92d20" opacity="0.7" />
+      <rect x="62" y="32" width="5" height="18" rx="1" fill="#d92d20" opacity="0.55" />
+      <rect x="69" y="36" width="5" height="14" rx="1" fill="#d92d20" opacity="0.4" />
+      <text
+        x="44"
+        y="70"
+        textAnchor="middle"
+        fill="#b42318"
+        fontSize="8"
+        fontFamily="IBM Plex Sans, sans-serif"
+        fontWeight="700"
+      >
+        phenotype
+      </text>
     </g>
   )
 }
@@ -263,21 +346,26 @@ export function ResearchSchematic({ id }: { id: SchematicId }) {
   const mid = `m-${id}`
 
   if (id === 'multimodal') {
+    // EHR → Fusion ← Genome Variants (Fusion centered, no crossing arrows)
     return (
-      <Frame id={id} height={132}>
-        <EhrIcon x={36} y={18} />
-        <Label x={63} y={98}>
+      <Frame id={id} height={128}>
+        <EhrIcon x={28} y={16} />
+        <Label x={56} y={102}>
           EHR
         </Label>
-        <GenomeIcon x={150} y={18} />
-        <Label x={186} y={98}>
-          Genome Variants
+
+        <Arrow id={mid} x1={92} y1={49} x2={168} y2={49} />
+
+        <FusionIcon x={178} y={16} />
+        <Label x={217} y={102}>
+          Multimodal Fusion
         </Label>
-        <Arrow id={mid} x1={98} y1={42} x2={318} y2={52} />
-        <Arrow id={mid} x1={230} y1={55} x2={318} y2={60} />
-        <FusionIcon x={330} y={20} />
-        <Label x={362} y={98}>
-          Fusion
+
+        <Arrow id={mid} x1={350} y1={49} x2={268} y2={49} />
+
+        <GenomeVariantsIcon x={360} y={16} />
+        <Label x={406} y={102}>
+          Genome Variants
         </Label>
       </Frame>
     )
@@ -285,20 +373,20 @@ export function ResearchSchematic({ id }: { id: SchematicId }) {
 
   if (id === 'alignment') {
     return (
-      <Frame id={id} height={132}>
-        <EhrIcon x={28} y={22} />
-        <Label x={55} y={104}>
+      <Frame id={id} height={128}>
+        <EhrIcon x={18} y={20} />
+        <Label x={46} y={106}>
           EHR
         </Label>
-        <DualH id={mid} x1={92} x2={168} y={54} />
-        <ModelIcon x={178} y={18} />
-        <Label x={214} y={104}>
+        <DualH id={mid} x1={82} x2={148} y={52} />
+        <ModelIcon x={158} y={16} />
+        <Label x={194} y={106}>
           Foundation Model
         </Label>
-        <DualH id={mid} x1={260} x2={336} y={54} />
-        <GenomeIcon x={348} y={22} />
-        <Label x={384} y={104}>
-          Genome
+        <DualH id={mid} x1={240} x2={300} y={52} />
+        <GenomeVariantsIcon x={310} y={20} />
+        <Label x={356} y={106}>
+          Genome Variants
         </Label>
       </Frame>
     )
@@ -306,30 +394,50 @@ export function ResearchSchematic({ id }: { id: SchematicId }) {
 
   if (id === 'device') {
     return (
-      <Frame id={id} height={132}>
-        <ModelIcon x={88} y={18} />
-        <Label x={124} y={108}>
+      <Frame id={id} height={128}>
+        <ModelIcon x={90} y={16} />
+        <Label x={126} y={108}>
           Model
         </Label>
-        <DualH id={mid} x1={170} x2={268} y={54} />
-        <DeviceIcon x={280} y={18} />
-        <Label x={316} y={108}>
-          Device
+        <DualH id={mid} x1={172} x2={260} y={52} />
+        <WearableIcon x={272} y={16} />
+        <Label x={311} y={108}>
+          Wearable Device
         </Label>
       </Frame>
     )
   }
 
+  // Centered multi-omics → phenotype, with ellipsis for more omics
   return (
-    <Frame id={id} height={132}>
-      <OmicsBand x={20} y={18} w={150} color={teal} soft={tealSoft} label="Genomics" />
-      <OmicsBand x={20} y={46} w={150} color={blue} soft={blueSoft} label="Transcriptomics" />
-      <OmicsBand x={20} y={74} w={150} color={amber} soft={amberSoft} label="Proteomics" />
-      <Arrow id={mid} x1={180} y1={55} x2={286} y2={55} />
-      <DiseaseIcon x={300} y={20} />
-      <Label x={339} y={114}>
-        Disease
-      </Label>
+    <Frame id={id} height={128}>
+      <g transform="translate(48 0)">
+        <OmicsBand x={0} y={14} w={140} color={teal} soft={tealSoft} label="Genomics" />
+        <OmicsBand x={0} y={40} w={140} color={blue} soft={blueSoft} label="Transcriptomics" />
+        <OmicsBand x={0} y={66} w={140} color={amber} soft={amberSoft} label="Proteomics" />
+        <text
+          x={70}
+          y={108}
+          textAnchor="middle"
+          fill={ink}
+          fontSize="16"
+          fontFamily="IBM Plex Sans, sans-serif"
+          fontWeight="700"
+          letterSpacing="2"
+        >
+          ···
+        </text>
+        <Label x={70} y={122}>
+          Multi-omics
+        </Label>
+
+        <Arrow id={mid} x1={152} y1={52} x2={230} y2={52} />
+
+        <PhenotypeIcon x={242} y={18} />
+        <Label x={286} y={114}>
+          Clinical Phenotype
+        </Label>
+      </g>
     </Frame>
   )
 }
