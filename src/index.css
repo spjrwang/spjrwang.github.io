@@ -526,8 +526,8 @@ button {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 110px;
-  border-radius: 6px;
+  max-height: 140px;
+  border-radius: 8px;
   border: 1px solid var(--line);
   background: #fff;
 }
