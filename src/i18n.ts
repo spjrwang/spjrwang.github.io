@@ -80,7 +80,7 @@ export const copy = {
         school: 'University of California San Diego',
         period: '2026.9 – 2031.9',
         url: 'https://ucsd.edu',
-        logo: '/logos/ucsd.png',
+        logo: '/logos/ucsd.svg',
       },
       {
         degree: 'BS, Bioinformatics',
@@ -150,7 +150,7 @@ export const copy = {
         school: '加州大学圣地亚哥分校（UC San Diego）',
         period: '2026.9 – 2031.9',
         url: 'https://ucsd.edu',
-        logo: '/logos/ucsd.png',
+        logo: '/logos/ucsd.svg',
       },
       {
         degree: '学士，生物信息学',
