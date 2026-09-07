@@ -67,7 +67,7 @@ export const copy = {
     aboutBody:
       'I am a PhD student in Biomedical Informatics at the University of California San Diego. My work sits at the intersection of computation, biology, and medicine—turning complex biomedical signals and records into models that support discovery and care.',
     aboutBody2:
-      'I focus on multimodal integration, foundation-model alignment across EHR and genome modalities, and embedding models with devices in real clinical and research settings.',
+      'I focus on multimodal integration, foundation-model alignment across EHR and genome modalities, multi-omics approaches to disease etiology, and embedding models with devices in real clinical and research settings.',
     educationTitle: 'Education',
     education: [
       {
@@ -99,6 +99,11 @@ export const copy = {
         body: 'Embedding models with instruments and devices so learning systems can operate closer to real-world measurement and care workflows.',
         figure: '/figures/research-3.jpg',
       },
+      {
+        title: 'Multi-omics disease etiology',
+        body: 'Integrating multi-omics layers to investigate disease mechanisms and causal pathways linking molecular signals to clinical phenotypes.',
+        figure: '/figures/research-4.jpg',
+      },
     ],
     publicationsTitle: 'Publications',
     publicationsIntro: 'Selected peer-reviewed publications.',
@@ -127,7 +132,7 @@ export const copy = {
     aboutBody:
       '我是加州大学圣地亚哥分校（UC San Diego）生物医学信息学（Biomedical Informatics）博士生。研究位于计算、生物学与医学的交汇处，致力于将复杂的生物医学信号与记录转化为能够支持科学发现与临床实践的模型。',
     aboutBody2:
-      '当前关注多模态整合、EHR 与基因组模态之间的基础模型对齐，以及模型与设备/装置的嵌入与整合。',
+      '当前关注多模态整合、EHR 与基因组模态之间的基础模型对齐、多组学疾病成因研究，以及模型与设备/装置的嵌入与整合。',
     educationTitle: '教育经历',
     education: [
       {
@@ -158,6 +163,11 @@ export const copy = {
         title: '模型与设备整合',
         body: '将模型嵌入仪器与 device，使学习系统更贴近真实测量与临床工作流。',
         figure: '/figures/research-3.jpg',
+      },
+      {
+        title: '多组学疾病成因',
+        body: '整合多组学层级数据，探究疾病机制与因果通路，连接分子信号与临床表型。',
+        figure: '/figures/research-4.jpg',
       },
     ],
     publicationsTitle: '发表论文',
