@@ -114,13 +114,15 @@ export default function App() {
               {t.education.map((item) => (
                 <li key={item.degree} className="edu">
                   <div className="edu__brand">
-                    <img
-                      className="edu__logo"
-                      src={item.logo}
-                      alt=""
-                      width={84}
-                      height={84}
-                    />
+                    <div className="edu__logo-wrap">
+                      <img
+                        className="edu__logo"
+                        src={item.logo}
+                        alt=""
+                        width={88}
+                        height={88}
+                      />
+                    </div>
                     <div className="edu__main">
                       <h3 className="edu__degree">{item.degree}</h3>
                       <a
