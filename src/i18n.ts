@@ -8,6 +8,7 @@ export type Publication = {
   venue: string
   year: string
   doi: string
+  figure: string
 }
 
 export const publications: Publication[] = [
@@ -26,6 +27,7 @@ export const publications: Publication[] = [
     venue: 'Journal of Chemical Information and Modeling',
     year: '2025',
     doi: '10.1021/acs.jcim.5c01219',
+    figure: '/figures/pub-protPheMut.jpg',
   },
   {
     title:
@@ -42,6 +44,7 @@ export const publications: Publication[] = [
     venue: 'Journal of Chemical Information and Modeling',
     year: '2025',
     doi: '10.1021/acs.jcim.5c00134',
+    figure: '/figures/pub-pten.jpg',
   },
 ]
 

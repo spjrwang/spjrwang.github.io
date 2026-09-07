@@ -25,6 +25,7 @@ dist-ssr
 
 # Local media / copyrighted PDFs — do not publish PDFs
 Publications/*.pdf
-Figures/
+/Figures/
 src/assets/hero.png
+!/public/figures/
 

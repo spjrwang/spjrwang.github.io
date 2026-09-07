@@ -113,14 +113,25 @@ export default function App() {
           <div className="section__inner">
             <h2 className="section__title">{t.researchTitle}</h2>
             <p className="section__lead">{t.researchIntro}</p>
-            <ul className="interest-list">
-              {t.interests.map((item) => (
-                <li key={item.title} className="interest">
-                  <h3 className="interest__title">{item.title}</h3>
-                  <p className="interest__body">{item.body}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="research-layout">
+              <ul className="interest-list">
+                {t.interests.map((item) => (
+                  <li key={item.title} className="interest">
+                    <h3 className="interest__title">{item.title}</h3>
+                    <p className="interest__body">{item.body}</p>
+                  </li>
+                ))}
+              </ul>
+              <figure className="research-figure">
+                <img
+                  src="/figures/research-schematic.jpg"
+                  alt="Research interests schematic: multimodal EHR and genomics integration, foundation model alignment, and model-device integration"
+                  width={720}
+                  height={960}
+                  loading="lazy"
+                />
+              </figure>
+            </div>
           </div>
         </section>
 
@@ -131,21 +142,32 @@ export default function App() {
             <ol className="pub-list">
               {publications.map((pub) => (
                 <li key={pub.doi} className="pub">
-                  <a
-                    className="pub__title"
-                    href={`https://doi.org/${pub.doi}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {pub.title}
-                  </a>
-                  <p className="pub__meta">
-                    <AuthorsLine authors={pub.authors} />
-                  </p>
-                  <p className="pub__venue">
-                    <span className="pub__journal">{pub.venue}</span>
-                    <span className="pub__year"> · {pub.year}</span>
-                  </p>
+                  <div className="pub__body">
+                    <a
+                      className="pub__title"
+                      href={`https://doi.org/${pub.doi}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {pub.title}
+                    </a>
+                    <p className="pub__meta">
+                      <AuthorsLine authors={pub.authors} />
+                    </p>
+                    <p className="pub__venue">
+                      <span className="pub__journal">{pub.venue}</span>
+                      <span className="pub__year"> · {pub.year}</span>
+                    </p>
+                  </div>
+                  <figure className="pub__figure">
+                    <img
+                      src={pub.figure}
+                      alt=""
+                      width={640}
+                      height={360}
+                      loading="lazy"
+                    />
+                  </figure>
                 </li>
               ))}
             </ol>
