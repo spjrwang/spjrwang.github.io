@@ -9,12 +9,18 @@ const blueSoft = '#e4eef8'
 const amber = '#9a6700'
 const amberSoft = '#f5edd8'
 const ink = '#3d4d5f'
+const W = 460
+const H = 122
+const ICON_Y = 10
+const ICON_H = 70
+const LABEL_Y = 106
+const ARROW_Y = ICON_Y + ICON_H / 2
 
-function Label({ x, y, children }: { x: number; y: number; children: string }) {
+function Label({ x, children }: { x: number; children: string }) {
   return (
     <text
       x={x}
-      y={y}
+      y={LABEL_Y}
       textAnchor="middle"
       fill={ink}
       fontSize="11"
@@ -29,24 +35,22 @@ function Label({ x, y, children }: { x: number; y: number; children: string }) {
 function Arrow({
   id,
   x1,
-  y1,
   x2,
-  y2,
+  y = ARROW_Y,
   dashed = false,
 }: {
   id: string
   x1: number
-  y1: number
   x2: number
-  y2: number
+  y?: number
   dashed?: boolean
 }) {
   return (
     <line
       x1={x1}
-      y1={y1}
+      y1={y}
       x2={x2}
-      y2={y2}
+      y2={y}
       stroke={teal}
       strokeWidth="1.7"
       strokeDasharray={dashed ? '4 3' : undefined}
@@ -55,41 +59,18 @@ function Arrow({
   )
 }
 
-function DualH({
-  id,
-  x1,
-  x2,
-  y,
-}: {
-  id: string
-  x1: number
-  x2: number
-  y: number
-}) {
+function DualH({ id, x1, x2 }: { id: string; x1: number; x2: number }) {
   return (
     <>
-      <Arrow id={id} x1={x1} y1={y - 5} x2={x2} y2={y - 5} dashed />
-      <Arrow id={id} x1={x2} y1={y + 5} x2={x1} y2={y + 5} dashed />
+      <Arrow id={id} x1={x1} x2={x2} y={ARROW_Y - 6} dashed />
+      <Arrow id={id} x1={x2} x2={x1} y={ARROW_Y + 6} dashed />
     </>
   )
 }
 
-function Frame({
-  id,
-  height = 128,
-  children,
-}: {
-  id: string
-  height?: number
-  children: ReactNode
-}) {
+function Frame({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <svg
-      className="schematic"
-      viewBox={`0 0 460 ${height}`}
-      role="img"
-      aria-hidden="true"
-    >
+    <svg className="schematic" viewBox={`0 0 ${W} ${H}`} role="img" aria-hidden="true">
       <defs>
         <marker
           id={`m-${id}`}
@@ -108,23 +89,44 @@ function Frame({
   )
 }
 
-/** Clinical record / EHR */
-function EhrIcon({ x, y }: { x: number; y: number }) {
+/** Uniform card shell */
+function Card({
+  w,
+  fill,
+  stroke,
+  children,
+}: {
+  w: number
+  fill: string
+  stroke: string
+  children?: ReactNode
+}) {
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect width="56" height="66" rx="8" fill={blueSoft} stroke={blue} strokeWidth="1.5" />
-      <rect x="11" y="12" width="34" height="5" rx="2" fill={blue} opacity="0.35" />
-      <rect x="11" y="23" width="28" height="5" rx="2" fill={blue} opacity="0.28" />
-      <rect x="11" y="34" width="32" height="5" rx="2" fill={blue} opacity="0.28" />
-      <rect x="11" y="45" width="22" height="5" rx="2" fill={teal} opacity="0.5" />
-      <circle cx="42" cy="50" r="8" fill={teal} />
-      <path d="M39 50h6M42 47v6" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
+    <>
+      <rect width={w} height={ICON_H} rx="10" fill={fill} stroke={stroke} strokeWidth="1.5" />
+      {children}
+    </>
+  )
+}
+
+function EhrIcon({ x }: { x: number }) {
+  const w = 72
+  return (
+    <g transform={`translate(${x} ${ICON_Y})`}>
+      <Card w={w} fill={blueSoft} stroke={blue}>
+        <rect x="14" y="14" width="32" height="5" rx="2" fill={blue} opacity="0.35" />
+        <rect x="14" y="25" width="26" height="5" rx="2" fill={blue} opacity="0.28" />
+        <rect x="14" y="36" width="30" height="5" rx="2" fill={blue} opacity="0.28" />
+        <rect x="14" y="47" width="18" height="5" rx="2" fill={teal} opacity="0.5" />
+        <circle cx="52" cy="50" r="8" fill={teal} />
+        <path d="M49 50h6M52 47v6" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
+      </Card>
     </g>
   )
 }
 
-/** Sequence with a highlighted variant base — clearer than abstract helix ticks */
-function GenomeVariantsIcon({ x, y }: { x: number; y: number }) {
+function GenomeVariantsIcon({ x }: { x: number }) {
+  const w = 88
   const bases = [
     { t: 'A', c: blue },
     { t: 'T', c: teal },
@@ -132,146 +134,147 @@ function GenomeVariantsIcon({ x, y }: { x: number; y: number }) {
     { t: 'C', c: blue },
   ]
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect width="92" height="66" rx="8" fill={tealSoft} stroke={teal} strokeWidth="1.5" />
-      <text
-        x="46"
-        y="18"
-        textAnchor="middle"
-        fill={ink}
-        fontSize="9"
-        fontFamily="IBM Plex Sans, sans-serif"
-        fontWeight="600"
-      >
-        DNA sequence
-      </text>
-      {bases.map((b, i) => (
-        <g key={i} transform={`translate(${10 + i * 18} 26)`}>
-          <rect width="15" height="18" rx="3" fill="#fff" stroke={b.c} strokeWidth="1.2" />
-          <text
-            x="7.5"
-            y="13"
-            textAnchor="middle"
-            fill={b.c}
-            fontSize="10"
-            fontFamily="IBM Plex Sans, sans-serif"
-            fontWeight="700"
-          >
-            {b.t}
-          </text>
-        </g>
-      ))}
-      {/* mutated position */}
-      <g transform="translate(28 48)">
-        <rect width="15" height="14" rx="3" fill="#fff3cd" stroke={amber} strokeWidth="1.4" />
+    <g transform={`translate(${x} ${ICON_Y})`}>
+      <Card w={w} fill={tealSoft} stroke={teal}>
         <text
-          x="7.5"
-          y="11"
+          x={w / 2}
+          y="16"
+          textAnchor="middle"
+          fill={ink}
+          fontSize="9"
+          fontFamily="IBM Plex Sans, sans-serif"
+          fontWeight="600"
+        >
+          DNA sequence
+        </text>
+        {bases.map((b, i) => (
+          <g key={i} transform={`translate(${12 + i * 17} 24)`}>
+            <rect
+              width="14"
+              height="17"
+              rx="3"
+              fill={i === 1 ? '#fff3cd' : '#fff'}
+              stroke={i === 1 ? amber : b.c}
+              strokeWidth={i === 1 ? 1.5 : 1.2}
+            />
+            <text
+              x="7"
+              y="12.5"
+              textAnchor="middle"
+              fill={i === 1 ? amber : b.c}
+              fontSize="10"
+              fontFamily="IBM Plex Sans, sans-serif"
+              fontWeight="700"
+            >
+              {i === 1 ? 'A' : b.t}
+            </text>
+          </g>
+        ))}
+        <text
+          x={w / 2}
+          y="58"
           textAnchor="middle"
           fill={amber}
           fontSize="9"
           fontFamily="IBM Plex Sans, sans-serif"
+          fontWeight="600"
+        >
+          ★ variant site
+        </text>
+      </Card>
+    </g>
+  )
+}
+
+function FusionIcon({ x }: { x: number }) {
+  const w = 84
+  return (
+    <g transform={`translate(${x} ${ICON_Y})`}>
+      <Card w={w} fill="#eef6f4" stroke={teal}>
+        <rect x="12" y="12" width="24" height="16" rx="3" fill={blueSoft} stroke={blue} strokeWidth="1.1" />
+        <rect x="48" y="12" width="24" height="16" rx="3" fill={tealSoft} stroke={teal} strokeWidth="1.1" />
+        <path
+          d="M24 28v6c0 5 8 9 18 9s18-4 18-9v-6"
+          fill="none"
+          stroke={teal}
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+        <rect x="23" y="46" width="38" height="14" rx="4" fill={amber} />
+        <text
+          x={w / 2}
+          y="56"
+          textAnchor="middle"
+          fill="#fff"
+          fontSize="9"
+          fontFamily="IBM Plex Sans, sans-serif"
           fontWeight="700"
         >
-          A
+          merged
         </text>
-      </g>
-      <text
-        x="54"
-        y="59"
-        fill={amber}
-        fontSize="9"
-        fontFamily="IBM Plex Sans, sans-serif"
-        fontWeight="600"
-      >
-        variant
-      </text>
+      </Card>
     </g>
   )
 }
 
-/** Two inputs merge into one representation — concrete fusion */
-function FusionIcon({ x, y }: { x: number; y: number }) {
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect width="78" height="66" rx="10" fill="#eef6f4" stroke={teal} strokeWidth="1.5" />
-      <rect x="10" y="12" width="22" height="16" rx="3" fill={blueSoft} stroke={blue} strokeWidth="1.1" />
-      <rect x="46" y="12" width="22" height="16" rx="3" fill={tealSoft} stroke={teal} strokeWidth="1.1" />
-      <path
-        d="M21 28v8c0 6 8 10 18 10s18-4 18-10v-8"
-        fill="none"
-        stroke={teal}
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <rect x="22" y="44" width="34" height="14" rx="4" fill={amber} opacity="0.9" />
-      <text
-        x="39"
-        y="54"
-        textAnchor="middle"
-        fill="#fff"
-        fontSize="8"
-        fontFamily="IBM Plex Sans, sans-serif"
-        fontWeight="700"
-      >
-        merged
-      </text>
-    </g>
-  )
-}
-
-function ModelIcon({ x, y }: { x: number; y: number }) {
+function ModelIcon({ x }: { x: number }) {
+  const w = 72
   const nodes = [
-    [12, 16],
-    [12, 36],
-    [12, 56],
-    [36, 26],
-    [36, 46],
-    [60, 36],
+    [14, 16],
+    [14, 35],
+    [14, 54],
+    [36, 25],
+    [36, 45],
+    [58, 35],
   ]
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect width="72" height="72" rx="10" fill={blueSoft} stroke={blue} strokeWidth="1.5" />
-      <line x1="12" y1="16" x2="36" y2="26" stroke={blue} strokeWidth="1.2" opacity="0.45" />
-      <line x1="12" y1="36" x2="36" y2="26" stroke={blue} strokeWidth="1.2" opacity="0.45" />
-      <line x1="12" y1="36" x2="36" y2="46" stroke={blue} strokeWidth="1.2" opacity="0.45" />
-      <line x1="12" y1="56" x2="36" y2="46" stroke={blue} strokeWidth="1.2" opacity="0.45" />
-      <line x1="36" y1="26" x2="60" y2="36" stroke={teal} strokeWidth="1.2" opacity="0.55" />
-      <line x1="36" y1="46" x2="60" y2="36" stroke={teal} strokeWidth="1.2" opacity="0.55" />
-      {nodes.map(([nx, ny], i) => (
-        <circle key={i} cx={nx} cy={ny} r="4.5" fill={i === 5 ? teal : blue} />
-      ))}
+    <g transform={`translate(${x} ${ICON_Y})`}>
+      <Card w={w} fill={blueSoft} stroke={blue}>
+        <line x1="14" y1="16" x2="36" y2="25" stroke={blue} strokeWidth="1.2" opacity="0.45" />
+        <line x1="14" y1="35" x2="36" y2="25" stroke={blue} strokeWidth="1.2" opacity="0.45" />
+        <line x1="14" y1="35" x2="36" y2="45" stroke={blue} strokeWidth="1.2" opacity="0.45" />
+        <line x1="14" y1="54" x2="36" y2="45" stroke={blue} strokeWidth="1.2" opacity="0.45" />
+        <line x1="36" y1="25" x2="58" y2="35" stroke={teal} strokeWidth="1.2" opacity="0.55" />
+        <line x1="36" y1="45" x2="58" y2="35" stroke={teal} strokeWidth="1.2" opacity="0.55" />
+        {nodes.map(([nx, ny], i) => (
+          <circle key={i} cx={nx} cy={ny} r="4.2" fill={i === 5 ? teal : blue} />
+        ))}
+      </Card>
     </g>
   )
 }
 
-/** Smartwatch + wearable cue */
-function WearableIcon({ x, y }: { x: number; y: number }) {
+/** Side-band smartwatch — bands left/right, dial unobstructed */
+function WearableIcon({ x }: { x: number }) {
+  const w = 88
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect width="78" height="72" rx="10" fill={amberSoft} stroke={amber} strokeWidth="1.5" />
-      {/* watch band */}
-      <rect x="30" y="6" width="18" height="12" rx="3" fill={ink} opacity="0.35" />
-      <rect x="30" y="54" width="18" height="12" rx="3" fill={ink} opacity="0.35" />
-      {/* watch body */}
-      <rect x="22" y="16" width="34" height="40" rx="8" fill="#fff" stroke={ink} strokeWidth="1.4" />
-      <circle cx="39" cy="36" r="11" fill={blueSoft} stroke={blue} strokeWidth="1.2" />
-      <path
-        d="M39 29v7l5 3"
-        fill="none"
-        stroke={teal}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      {/* small pulse on face */}
-      <path
-        d="M28 48h4l2-3 2 5 2-2h4"
-        fill="none"
-        stroke={teal}
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        opacity="0.7"
-      />
+    <g transform={`translate(${x} ${ICON_Y})`}>
+      <Card w={w} fill={amberSoft} stroke={amber}>
+        {/* left band */}
+        <rect x="8" y="28" width="14" height="14" rx="3" fill={ink} opacity="0.28" />
+        {/* right band */}
+        <rect x="66" y="28" width="14" height="14" rx="3" fill={ink} opacity="0.28" />
+        {/* watch case */}
+        <rect x="26" y="12" width="36" height="46" rx="9" fill="#fff" stroke={ink} strokeWidth="1.4" />
+        {/* dial */}
+        <circle cx="44" cy="32" r="12" fill={blueSoft} stroke={blue} strokeWidth="1.2" />
+        <path
+          d="M44 24v8l5 3"
+          fill="none"
+          stroke={teal}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        {/* pulse under dial, inside case only */}
+        <path
+          d="M32 52h4l2-3 3 6 2-3h5"
+          fill="none"
+          stroke={teal}
+          strokeWidth="1.3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </Card>
     </g>
   )
 }
@@ -293,10 +296,10 @@ function OmicsBand({
 }) {
   return (
     <g>
-      <rect x={x} y={y} width={w} height="20" rx="6" fill={soft} stroke={color} strokeWidth="1.3" />
+      <rect x={x} y={y} width={w} height="18" rx="6" fill={soft} stroke={color} strokeWidth="1.3" />
       <text
         x={x + w / 2}
-        y={y + 14}
+        y={y + 13}
         textAnchor="middle"
         fill={ink}
         fontSize="10"
@@ -309,135 +312,141 @@ function OmicsBand({
   )
 }
 
-/** Clinical phenotype / patient outcome — clearer than abstract disease blob */
-function PhenotypeIcon({ x, y }: { x: number; y: number }) {
+function PhenotypeIcon({ x }: { x: number }) {
+  const w = 88
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect width="88" height="78" rx="12" fill="#f7e8e8" stroke="#b42318" strokeWidth="1.5" />
-      {/* person */}
-      <circle cx="28" cy="28" r="9" fill="#fff" stroke="#b42318" strokeWidth="1.3" />
-      <path
-        d="M14 58c2-12 8-18 14-18s12 6 14 18"
-        fill="#fff"
-        stroke="#b42318"
-        strokeWidth="1.3"
-      />
-      {/* clinic chart */}
-      <rect x="50" y="18" width="28" height="36" rx="4" fill="#fff" stroke="#b42318" strokeWidth="1.2" />
-      <rect x="55" y="40" width="5" height="10" rx="1" fill="#d92d20" opacity="0.7" />
-      <rect x="62" y="32" width="5" height="18" rx="1" fill="#d92d20" opacity="0.55" />
-      <rect x="69" y="36" width="5" height="14" rx="1" fill="#d92d20" opacity="0.4" />
-      <text
-        x="44"
-        y="70"
-        textAnchor="middle"
-        fill="#b42318"
-        fontSize="8"
-        fontFamily="IBM Plex Sans, sans-serif"
-        fontWeight="700"
-      >
-        phenotype
-      </text>
+    <g transform={`translate(${x} ${ICON_Y})`}>
+      <Card w={w} fill="#f7e8e8" stroke="#b42318">
+        <circle cx="28" cy="24" r="8" fill="#fff" stroke="#b42318" strokeWidth="1.3" />
+        <path
+          d="M15 52c2-11 7-16 13-16s11 5 13 16"
+          fill="#fff"
+          stroke="#b42318"
+          strokeWidth="1.3"
+        />
+        <rect x="52" y="14" width="26" height="34" rx="4" fill="#fff" stroke="#b42318" strokeWidth="1.2" />
+        <rect x="57" y="34" width="5" height="10" rx="1" fill="#d92d20" opacity="0.7" />
+        <rect x="63" y="28" width="5" height="16" rx="1" fill="#d92d20" opacity="0.55" />
+        <rect x="69" y="31" width="5" height="13" rx="1" fill="#d92d20" opacity="0.4" />
+        <text
+          x={w / 2}
+          y="62"
+          textAnchor="middle"
+          fill="#b42318"
+          fontSize="8"
+          fontFamily="IBM Plex Sans, sans-serif"
+          fontWeight="700"
+        >
+          phenotype
+        </text>
+      </Card>
     </g>
   )
+}
+
+/** Evenly place n cards with equal arrow gaps; returns x positions of card left edges */
+function layoutRow(widths: number[], sidePad = 28) {
+  const totalW = widths.reduce((a, b) => a + b, 0)
+  const gaps = widths.length - 1
+  const free = W - sidePad * 2 - totalW
+  const gap = free / gaps
+  const xs: number[] = []
+  let x = sidePad
+  for (const w of widths) {
+    xs.push(x)
+    x += w + gap
+  }
+  return { xs, gap }
 }
 
 export function ResearchSchematic({ id }: { id: SchematicId }) {
   const mid = `m-${id}`
 
   if (id === 'multimodal') {
-    // EHR → Fusion ← Genome Variants (Fusion centered, no crossing arrows)
+    const widths = [72, 84, 88]
+    const { xs } = layoutRow(widths)
     return (
-      <Frame id={id} height={128}>
-        <EhrIcon x={28} y={16} />
-        <Label x={56} y={102}>
-          EHR
-        </Label>
-
-        <Arrow id={mid} x1={92} y1={49} x2={168} y2={49} />
-
-        <FusionIcon x={178} y={16} />
-        <Label x={217} y={102}>
-          Multimodal Fusion
-        </Label>
-
-        <Arrow id={mid} x1={350} y1={49} x2={268} y2={49} />
-
-        <GenomeVariantsIcon x={360} y={16} />
-        <Label x={406} y={102}>
-          Genome Variants
-        </Label>
+      <Frame id={id}>
+        <EhrIcon x={xs[0]} />
+        <Label x={xs[0] + widths[0] / 2}>EHR</Label>
+        <Arrow id={mid} x1={xs[0] + widths[0] + 4} x2={xs[1] - 4} />
+        <FusionIcon x={xs[1]} />
+        <Label x={xs[1] + widths[1] / 2}>Multimodal Fusion</Label>
+        <Arrow id={mid} x1={xs[2] - 4} x2={xs[1] + widths[1] + 4} />
+        <GenomeVariantsIcon x={xs[2]} />
+        <Label x={xs[2] + widths[2] / 2}>Genome Variants</Label>
       </Frame>
     )
   }
 
   if (id === 'alignment') {
+    const widths = [72, 72, 88]
+    const { xs } = layoutRow(widths)
     return (
-      <Frame id={id} height={128}>
-        <EhrIcon x={18} y={20} />
-        <Label x={46} y={106}>
-          EHR
-        </Label>
-        <DualH id={mid} x1={82} x2={148} y={52} />
-        <ModelIcon x={158} y={16} />
-        <Label x={194} y={106}>
-          Foundation Model
-        </Label>
-        <DualH id={mid} x1={240} x2={300} y={52} />
-        <GenomeVariantsIcon x={310} y={20} />
-        <Label x={356} y={106}>
-          Genome Variants
-        </Label>
+      <Frame id={id}>
+        <EhrIcon x={xs[0]} />
+        <Label x={xs[0] + widths[0] / 2}>EHR</Label>
+        <DualH id={mid} x1={xs[0] + widths[0] + 4} x2={xs[1] - 4} />
+        <ModelIcon x={xs[1]} />
+        <Label x={xs[1] + widths[1] / 2}>Foundation Model</Label>
+        <DualH id={mid} x1={xs[1] + widths[1] + 4} x2={xs[2] - 4} />
+        <GenomeVariantsIcon x={xs[2]} />
+        <Label x={xs[2] + widths[2] / 2}>Genome Variants</Label>
       </Frame>
     )
   }
 
   if (id === 'device') {
+    const widths = [72, 88]
+    const { xs } = layoutRow(widths, 70)
     return (
-      <Frame id={id} height={128}>
-        <ModelIcon x={90} y={16} />
-        <Label x={126} y={108}>
-          Model
-        </Label>
-        <DualH id={mid} x1={172} x2={260} y={52} />
-        <WearableIcon x={272} y={16} />
-        <Label x={311} y={108}>
-          Wearable Device
-        </Label>
+      <Frame id={id}>
+        <ModelIcon x={xs[0]} />
+        <Label x={xs[0] + widths[0] / 2}>Model</Label>
+        <DualH id={mid} x1={xs[0] + widths[0] + 4} x2={xs[1] - 4} />
+        <WearableIcon x={xs[1]} />
+        <Label x={xs[1] + widths[1] / 2}>Wearable Device</Label>
       </Frame>
     )
   }
 
-  // Centered multi-omics → phenotype, with ellipsis for more omics
+  // Multi-omics stack + phenotype, horizontally centered as one group
+  const stackW = 132
+  const phenoW = 88
+  const arrowGap = 36
+  const groupW = stackW + arrowGap + phenoW
+  const origin = (W - groupW) / 2
+  const stackX = origin
+  const phenoX = origin + stackW + arrowGap
+
   return (
-    <Frame id={id} height={128}>
-      <g transform="translate(48 0)">
-        <OmicsBand x={0} y={14} w={140} color={teal} soft={tealSoft} label="Genomics" />
-        <OmicsBand x={0} y={40} w={140} color={blue} soft={blueSoft} label="Transcriptomics" />
-        <OmicsBand x={0} y={66} w={140} color={amber} soft={amberSoft} label="Proteomics" />
-        <text
-          x={70}
-          y={108}
-          textAnchor="middle"
-          fill={ink}
-          fontSize="16"
-          fontFamily="IBM Plex Sans, sans-serif"
-          fontWeight="700"
-          letterSpacing="2"
-        >
-          ···
-        </text>
-        <Label x={70} y={122}>
-          Multi-omics
-        </Label>
+    <Frame id={id}>
+      <OmicsBand x={stackX} y={14} w={stackW} color={teal} soft={tealSoft} label="Genomics" />
+      <OmicsBand x={stackX} y={36} w={stackW} color={blue} soft={blueSoft} label="Transcriptomics" />
+      <OmicsBand x={stackX} y={58} w={stackW} color={amber} soft={amberSoft} label="Proteomics" />
+      <text
+        x={stackX + stackW / 2}
+        y={88}
+        textAnchor="middle"
+        fill={ink}
+        fontSize="15"
+        fontFamily="IBM Plex Sans, sans-serif"
+        fontWeight="700"
+        letterSpacing="1.5"
+      >
+        · · ·
+      </text>
+      <Label x={stackX + stackW / 2}>Multi-omics</Label>
 
-        <Arrow id={mid} x1={152} y1={52} x2={230} y2={52} />
+      <Arrow
+        id={mid}
+        x1={stackX + stackW + 4}
+        x2={phenoX - 4}
+        y={ICON_Y + ICON_H / 2}
+      />
 
-        <PhenotypeIcon x={242} y={18} />
-        <Label x={286} y={114}>
-          Clinical Phenotype
-        </Label>
-      </g>
+      <PhenotypeIcon x={phenoX} />
+      <Label x={phenoX + phenoW / 2}>Clinical Phenotype</Label>
     </Frame>
   )
 }
