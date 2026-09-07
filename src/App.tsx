@@ -118,8 +118,8 @@ export default function App() {
                       className="edu__logo"
                       src={item.logo}
                       alt=""
-                      width={72}
-                      height={72}
+                      width={84}
+                      height={84}
                     />
                     <div className="edu__main">
                       <h3 className="edu__degree">{item.degree}</h3>
