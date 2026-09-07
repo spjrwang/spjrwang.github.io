@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local media / copyrighted PDFs — do not publish PDFs
+Publications/*.pdf
+Figures/
+src/assets/hero.png
+
