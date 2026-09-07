@@ -29,10 +29,16 @@ export default function App() {
 
   return (
     <div className="site" data-lang={lang}>
-      <div className="atmosphere" aria-hidden="true" />
+      <div className="atmosphere" aria-hidden="true">
+        <div className="atmosphere__glow atmosphere__glow--a" />
+        <div className="atmosphere__glow atmosphere__glow--b" />
+      </div>
 
       <header className="nav">
         <a className="nav__brand" href="#top">
+          <span className="nav__mark" aria-hidden="true">
+            🧬
+          </span>
           {t.brand}
         </a>
         <nav className="nav__links" aria-label="Primary">
@@ -62,14 +68,17 @@ export default function App() {
               </a>
             </div>
           </div>
-          <div className="hero__visual reveal reveal--3">
-            <img
-              className="portrait"
-              src="/portrait.png"
-              alt={t.brand}
-              width={480}
-              height={480}
-            />
+
+          <div className="hero__visual reveal reveal--2">
+            <div className="portrait-stage">
+              <img
+                className="portrait"
+                src="/portrait.png"
+                alt={t.brand}
+                width={640}
+                height={640}
+              />
+            </div>
           </div>
         </section>
 
