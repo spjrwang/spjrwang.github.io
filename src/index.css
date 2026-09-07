@@ -9,6 +9,7 @@
   --teal-deep: #0b5f59;
   --blue: #1d4f91;
   --amber: #9a6700;
+  --shell: min(70vw, 1080px);
   --font: 'IBM Plex Sans', 'Noto Sans SC', system-ui, sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--ink);
@@ -106,7 +107,8 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.95rem clamp(1.25rem, 4vw, 3.5rem);
+  width: 100%;
+  padding: 0.95rem max(1rem, calc((100% - var(--shell)) / 2));
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
@@ -170,12 +172,13 @@ button {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
   align-items: center;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  min-height: calc(100svh - 4rem);
-  padding: clamp(1.5rem, 5vh, 3.5rem) clamp(1.25rem, 4vw, 3.5rem)
-    clamp(2.5rem, 7vh, 4.5rem);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  width: 100%;
+  min-height: auto;
+  padding: clamp(2rem, 5vh, 3.5rem) max(1rem, calc((100% - var(--shell)) / 2))
+    clamp(2.5rem, 6vh, 4rem);
 }
 
 .hero__copy {
@@ -259,14 +262,14 @@ button {
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  min-height: min(58vh, 520px);
+  min-height: 0;
 }
 
 .portrait-stage {
   position: relative;
-  width: min(100%, 460px);
+  width: min(100%, 220px);
   aspect-ratio: 1;
 }
 
@@ -358,7 +361,7 @@ button {
 .section {
   position: relative;
   z-index: 1;
-  padding: clamp(3.2rem, 8vh, 5.2rem) clamp(1.25rem, 4vw, 3.5rem);
+  padding: clamp(2.8rem, 7vh, 4.5rem) max(1rem, calc((100% - var(--shell)) / 2));
 }
 
 .section--alt {
@@ -366,12 +369,14 @@ button {
 }
 
 .section__inner {
-  max-width: 880px;
+  width: 100%;
+  max-width: none;
   margin: 0 auto;
+  padding-inline: 0;
 }
 
 .section__inner--narrow {
-  max-width: 620px;
+  max-width: none;
 }
 
 .section__title {
@@ -556,7 +561,9 @@ button {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.5rem 1.5rem;
-  padding: 1.4rem clamp(1.25rem, 4vw, 3.5rem) 2rem;
+  width: 100%;
+  margin-inline: auto;
+  padding: 1.4rem max(1rem, calc((100% - var(--shell)) / 2)) 2rem;
   border-top: 1px solid var(--line);
   color: var(--ink-soft);
   font-size: 0.9rem;
@@ -590,10 +597,11 @@ button {
   .hero__visual {
     order: -1;
     min-height: auto;
+    justify-content: center;
   }
 
   .portrait-stage {
-    width: min(72vw, 300px);
+    width: min(42vw, 180px);
   }
 
   .edu {
