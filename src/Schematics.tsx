@@ -136,13 +136,26 @@ export function ResearchSchematic({ id }: { id: SchematicId }) {
 
   if (id === 'multimodal') {
     return (
-      <Frame id={id}>
-        <Box x={18} y={24} w={88} h={44} label="EHR" />
-        <Arrow markerId={markerId} x1={112} y1={46} x2={142} y2={46} />
-        <Box x={150} y={24} w={130} h={44} label="Genome Variants" />
-        <Arrow markerId={markerId} x1={286} y1={46} x2={316} y2={46} />
-        <Box x={324} y={24} w={96} h={44} label="Fusion" />
-      </Frame>
+      <svg className="schematic" viewBox="0 0 440 110" role="img" aria-hidden="true">
+        <defs>
+          <marker
+            id={markerId}
+            viewBox="0 0 10 10"
+            refX="8"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill={stroke} />
+          </marker>
+        </defs>
+        <Box x={24} y={8} w={130} h={38} label="EHR" />
+        <Box x={24} y={64} w={130} h={38} label="Genome Variants" />
+        <Arrow markerId={markerId} x1={162} y1={27} x2={300} y2={48} />
+        <Arrow markerId={markerId} x1={162} y1={83} x2={300} y2={62} />
+        <Box x={312} y={33} w={104} h={44} label="Fusion" />
+      </svg>
     )
   }
 

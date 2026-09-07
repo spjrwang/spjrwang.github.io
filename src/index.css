@@ -526,7 +526,7 @@ button {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 92px;
+  max-height: 110px;
   border-radius: 6px;
   border: 1px solid var(--line);
   background: #fff;
