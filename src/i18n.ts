@@ -67,7 +67,7 @@ export const copy = {
     aboutBody:
       'I am a PhD student in Biomedical Informatics at the University of California San Diego. My work sits at the intersection of computation, biology, and medicine—turning complex biomedical signals and records into models that support discovery and care.',
     aboutBody2:
-      'I focus on multimodal integration, foundation-model alignment for continuous biomedical signals, and embedding models with devices in real clinical and research settings.',
+      'I focus on multimodal integration, foundation-model alignment across EHR and genome modalities, and embedding models with devices in real clinical and research settings.',
     educationTitle: 'Education',
     education: [
       {
@@ -91,7 +91,7 @@ export const copy = {
       },
       {
         title: 'Foundation model alignment',
-        body: 'Aligning foundation models and adapting them to continuous biomedical data streams and longitudinal signals.',
+        body: 'Aligning foundation models across modalities—especially EHR and genome variants—so heterogeneous clinical and genomic information can be represented in a shared space.',
         figure: '/figures/research-2.jpg',
       },
       {
@@ -127,7 +127,7 @@ export const copy = {
     aboutBody:
       '我是加州大学圣地亚哥分校（UC San Diego）生物医学信息学（Biomedical Informatics）博士生。研究位于计算、生物学与医学的交汇处，致力于将复杂的生物医学信号与记录转化为能够支持科学发现与临床实践的模型。',
     aboutBody2:
-      '当前关注多模态整合、面向连续数据的基础模型对齐，以及模型与设备/装置的嵌入与整合。',
+      '当前关注多模态整合、EHR 与基因组模态之间的基础模型对齐，以及模型与设备/装置的嵌入与整合。',
     educationTitle: '教育经历',
     education: [
       {
@@ -151,7 +151,7 @@ export const copy = {
       },
       {
         title: '基础模型对齐',
-        body: '对 Foundational Model 进行对齐，并应用于连续型生物医学数据与时序信号。',
+        body: '对 Foundational Model 进行跨模态对齐，尤其关注 EHR 与基因组变异之间的共享表征学习。',
         figure: '/figures/research-2.jpg',
       },
       {
