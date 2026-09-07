@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="UC San Diego">
+  <circle cx="60" cy="60" r="56" fill="#182B49"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#C69214" stroke-width="3"/>
+  <text x="60" y="52" text-anchor="middle" fill="#FFFFFF" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="18" font-weight="700">UC</text>
+  <text x="60" y="76" text-anchor="middle" fill="#C69214" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="600">San Diego</text>
+</svg>

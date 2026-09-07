@@ -1,5 +1,6 @@
 import { publications } from './i18n'
 import { useI18n } from './I18nProvider'
+import { ResearchSchematic } from './Schematics'
 
 const GITHUB = 'https://github.com/spjrwang'
 const EMAIL = 'mailto:jingranwang@ucsd.edu'
@@ -9,15 +10,29 @@ const LINKEDIN = 'https://www.linkedin.com/in/spencer-jrwang'
 
 function AuthorsLine({
   authors,
+  coFirst,
+  coFirstLabel,
 }: {
   authors: { name: string; self?: boolean }[]
+  coFirst?: boolean
+  coFirstLabel: string
 }) {
   return (
     <span className="pub__authors">
       {authors.map((author, i) => (
         <span key={`${author.name}-${i}`}>
           {i > 0 && ', '}
-          {author.self ? <strong>{author.name}</strong> : author.name}
+          {author.self ? (
+            <>
+              <strong>
+                {author.name}
+                {coFirst ? '*' : ''}
+              </strong>
+              {coFirst && <span className="pub__cofirst"> {coFirstLabel}</span>}
+            </>
+          ) : (
+            author.name
+          )}
         </span>
       ))}
     </span>
@@ -98,9 +113,25 @@ export default function App() {
             <ul className="edu-list">
               {t.education.map((item) => (
                 <li key={item.degree} className="edu">
-                  <div className="edu__main">
-                    <h3 className="edu__degree">{item.degree}</h3>
-                    <p className="edu__school">{item.school}</p>
+                  <div className="edu__brand">
+                    <img
+                      className="edu__logo"
+                      src={item.logo}
+                      alt=""
+                      width={40}
+                      height={40}
+                    />
+                    <div className="edu__main">
+                      <h3 className="edu__degree">{item.degree}</h3>
+                      <a
+                        className="edu__school"
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {item.school}
+                      </a>
+                    </div>
                   </div>
                   <p className="edu__period">{item.period}</p>
                 </li>
@@ -121,13 +152,7 @@ export default function App() {
                     <p className="interest__body">{item.body}</p>
                   </div>
                   <figure className="interest__figure">
-                    <img
-                      src={item.figure}
-                      alt=""
-                      width={640}
-                      height={360}
-                      loading="lazy"
-                    />
+                    <ResearchSchematic id={item.schematic} />
                   </figure>
                 </li>
               ))}
@@ -152,7 +177,11 @@ export default function App() {
                       {pub.title}
                     </a>
                     <p className="pub__meta">
-                      <AuthorsLine authors={pub.authors} />
+                      <AuthorsLine
+                        authors={pub.authors}
+                        coFirst={pub.coFirst}
+                        coFirstLabel={t.coFirstLabel}
+                      />
                     </p>
                     <p className="pub__venue">
                       <span className="pub__journal">{pub.venue}</span>

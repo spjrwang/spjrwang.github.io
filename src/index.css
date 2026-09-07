@@ -420,13 +420,29 @@ button {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem 1.5rem;
-  align-items: baseline;
+  align-items: center;
   padding: 0.75rem 0;
   border-top: 1px solid var(--line);
 }
 
 .edu:last-child {
   border-bottom: 1px solid var(--line);
+}
+
+.edu__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.edu__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #fff;
 }
 
 .edu__degree {
@@ -440,6 +456,13 @@ button {
   margin: 0;
   color: var(--blue);
   font-size: 0.94rem;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 35%, transparent);
+}
+
+.edu__school:hover {
+  color: var(--teal);
+  border-color: var(--teal);
 }
 
 .edu__period {
@@ -491,17 +514,19 @@ button {
   margin: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  max-height: 148px;
+  justify-content: stretch;
+  max-height: none;
 }
 
 .interest__figure img {
+  display: none;
+}
+
+.schematic {
   display: block;
   width: 100%;
-  max-height: 148px;
   height: auto;
-  object-fit: contain;
-  object-position: center;
+  max-height: 92px;
   border-radius: 6px;
   border: 1px solid var(--line);
   background: #fff;
@@ -563,6 +588,19 @@ button {
 .pub__authors strong {
   color: var(--teal-deep);
   font-weight: 700;
+}
+
+.pub__cofirst {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.08rem 0.4rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--teal) 12%, white);
+  color: var(--teal-deep);
+  font-size: 0.78rem;
+  font-weight: 650;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .pub__journal {
@@ -667,8 +705,12 @@ button {
   .interest__figure {
     position: static;
     max-width: 480px;
-    max-height: 140px;
+    max-height: none;
     margin-inline: auto;
+  }
+
+  .schematic {
+    max-height: 88px;
   }
 
   .pub__figure {
